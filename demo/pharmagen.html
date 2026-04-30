@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pharmagen Laboratorios — Portal Médico</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #1a2e4a; background: #f0f4f8; }
+
+    /* NAV */
+    nav {
+      background: #0A2E5C;
+      color: #fff;
+      padding: 0 48px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,.2);
+    }
+    .nav-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .nav-logo-icon {
+      width: 38px; height: 38px;
+      background: linear-gradient(135deg, #00A878, #007a58);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 18px; color: #fff; letter-spacing: -1px;
+    }
+    .nav-logo-text { font-size: 18px; font-weight: 700; color: #fff; }
+    .nav-logo-text span { color: #00A878; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,.75); text-decoration: none; font-size: 13px; transition: color .2s; }
+    .nav-links a:hover { color: #fff; }
+    .nav-badge {
+      background: #00A878; color: #fff; font-size: 11px; font-weight: 700;
+      padding: 4px 12px; border-radius: 20px; margin-left: 8px;
+    }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, #0A2E5C 0%, #0d3d7a 50%, #0f4d99 100%);
+      color: #fff; padding: 72px 48px;
+      display: flex; align-items: center; gap: 60px;
+      min-height: 440px;
+    }
+    .hero-content { max-width: 520px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(0,168,120,.2); border: 1px solid rgba(0,168,120,.4);
+      color: #4ecca0; font-size: 12px; font-weight: 600;
+      padding: 5px 14px; border-radius: 20px; margin-bottom: 24px;
+    }
+    .hero h1 { font-size: 38px; font-weight: 800; line-height: 1.15; margin-bottom: 18px; }
+    .hero h1 span { color: #00A878; }
+    .hero p { font-size: 15px; opacity: .8; line-height: 1.65; margin-bottom: 32px; }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary {
+      background: #00A878; color: #fff; border: none;
+      padding: 13px 28px; border-radius: 8px; font-size: 14px; font-weight: 600;
+      cursor: pointer; transition: opacity .2s;
+    }
+    .btn-primary:hover { opacity: .88; }
+    .btn-secondary {
+      background: rgba(255,255,255,.1); color: #fff;
+      border: 1px solid rgba(255,255,255,.25);
+      padding: 13px 28px; border-radius: 8px; font-size: 14px; font-weight: 600;
+      cursor: pointer; transition: background .2s;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,.18); }
+    .hero-stats {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+      margin-top: 40px;
+    }
+    .stat { text-align: center; }
+    .stat .num { font-size: 28px; font-weight: 800; color: #00A878; }
+    .stat .label { font-size: 11px; opacity: .65; margin-top: 2px; text-transform: uppercase; letter-spacing: .5px; }
+    .hero-visual {
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 16px; padding: 32px; flex-shrink: 0;
+      max-width: 380px; width: 100%; text-align: center;
+    }
+    .hero-visual .icon { font-size: 72px; margin-bottom: 16px; }
+    .hero-visual p { opacity: .65; font-size: 13px; line-height: 1.5; }
+
+    /* PRODUCTS */
+    .products { padding: 64px 48px; background: #fff; }
+    .section-header { text-align: center; margin-bottom: 48px; }
+    .section-header h2 { font-size: 28px; font-weight: 800; color: #0A2E5C; margin-bottom: 8px; }
+    .section-header p { color: #64748b; font-size: 15px; }
+    .products-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px; max-width: 1080px; margin: 0 auto;
+    }
+    .product-card {
+      border: 1px solid #e2e8f0; border-radius: 14px; overflow: hidden;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .product-card:hover { box-shadow: 0 12px 32px rgba(10,46,92,.12); transform: translateY(-2px); }
+    .product-thumb {
+      background: linear-gradient(135deg, #0A2E5C, #0f4d99);
+      height: 140px; display: flex; align-items: center; justify-content: center;
+      font-size: 56px; position: relative;
+    }
+    .product-ta {
+      position: absolute; top: 10px; right: 10px;
+      background: #00A878; color: #fff; font-size: 10px; font-weight: 700;
+      padding: 3px 8px; border-radius: 20px;
+    }
+    .product-info { padding: 18px; }
+    .product-name { font-size: 15px; font-weight: 700; color: #0A2E5C; margin-bottom: 4px; }
+    .product-molecule { font-size: 12px; color: #64748b; margin-bottom: 8px; }
+    .product-indication {
+      font-size: 12px; color: #374151; background: #f0f9ff;
+      border-left: 3px solid #00A878; padding: 6px 10px; border-radius: 4px;
+    }
+
+    /* FEATURES */
+    .features { padding: 64px 48px; background: #f0f4f8; }
+    .features-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px; max-width: 1080px; margin: 0 auto;
+    }
+    .feature-card {
+      background: #fff; border-radius: 12px; padding: 24px;
+      text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+    .feature-card .icon { font-size: 36px; margin-bottom: 12px; }
+    .feature-card h3 { font-size: 14px; font-weight: 700; color: #0A2E5C; margin-bottom: 6px; }
+    .feature-card p { font-size: 12px; color: #64748b; line-height: 1.5; }
+
+    /* CTA */
+    .cta {
+      background: linear-gradient(135deg, #00A878, #007a58);
+      color: #fff; padding: 64px 48px; text-align: center;
+    }
+    .cta h2 { font-size: 28px; font-weight: 800; margin-bottom: 12px; }
+    .cta p { font-size: 15px; opacity: .85; margin-bottom: 28px; max-width: 540px; margin-left: auto; margin-right: auto; }
+    .cta .btn-cta {
+      background: #fff; color: #007a58; border: none;
+      padding: 14px 32px; border-radius: 8px; font-size: 15px; font-weight: 700;
+      cursor: pointer; transition: opacity .2s;
+    }
+    .cta .btn-cta:hover { opacity: .9; }
+
+    /* FOOTER */
+    footer {
+      background: #0A2E5C; color: rgba(255,255,255,.55);
+      padding: 28px 48px; display: flex; justify-content: space-between;
+      align-items: center; font-size: 12px; flex-wrap: wrap; gap: 12px;
+    }
+    footer strong { color: #fff; }
+    footer .disclaimer { max-width: 600px; font-size: 11px; opacity: .6; }
+
+    @media (max-width: 768px) {
+      .hero { flex-direction: column; padding: 48px 20px; }
+      .hero h1 { font-size: 26px; }
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .products, .features, .cta { padding: 48px 20px; }
+      footer { padding: 24px 20px; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-brand" href="#">
+      <div class="nav-logo-icon">Pg</div>
+      <span class="nav-logo-text">Pharma<span>gen</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#">Portafolio</a></li>
+      <li><a href="#">Evidencia Clínica</a></li>
+      <li><a href="#">Guías Terapéuticas</a></li>
+      <li><a href="#">Programa de Pacientes</a></li>
+      <li><a href="#">Portal Médico <span class="nav-badge">Nuevo</span></a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">🔬 Evidencia basada en ciencia</div>
+      <h1>Soluciones terapéuticas<br>respaldadas por<br><span>evidencia clínica</span></h1>
+      <p>Pharmagen Laboratorios pone a su disposición un representante médico virtual disponible 24/7 para consultas farmacológicas, información de productos y agendamiento de visitas.</p>
+      <div class="hero-actions">
+        <button class="btn-primary">Consultar al representante</button>
+        <button class="btn-secondary">Descargar fichas técnicas</button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="num">4</div><div class="label">Líneas terapéuticas</div></div>
+        <div class="stat"><div class="num">12+</div><div class="label">Estudios clínicos</div></div>
+        <div class="stat"><div class="num">24/7</div><div class="label">Soporte médico</div></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="icon">🧬</div>
+      <p>Representante médico virtual disponible ahora. Consulte sobre nuestro portafolio, posología, interacciones y más.</p>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section class="products">
+    <div class="section-header">
+      <h2>Portafolio Terapéutico</h2>
+      <p>Cuatro líneas farmacológicas con evidencia clínica de nivel I-II</p>
+    </div>
+    <div class="products-grid">
+      <div class="product-card">
+        <div class="product-thumb">💊<span class="product-ta">Cardio</span></div>
+        <div class="product-info">
+          <div class="product-name">Cardilex 20mg</div>
+          <div class="product-molecule">Atorvastatina</div>
+          <div class="product-indication">Dislipidemia · Prevención CV primaria y secundaria</div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-thumb">🩺<span class="product-ta">DM2</span></div>
+        <div class="product-info">
+          <div class="product-name">Glucovital XR 500mg</div>
+          <div class="product-molecule">Metformina LP</div>
+          <div class="product-indication">Diabetes Mellitus tipo 2 · Primera línea ADA</div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-thumb">🫁<span class="product-ta">Resp.</span></div>
+        <div class="product-info">
+          <div class="product-name">Bronchease</div>
+          <div class="product-molecule">Budesonida / Formoterol</div>
+          <div class="product-indication">Asma Step 3-4 · EPOC GOLD Step 3 · Terapia MART</div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-thumb">🧠<span class="product-ta">Neuro</span></div>
+        <div class="product-info">
+          <div class="product-name">Neurofine 75mg</div>
+          <div class="product-molecule">Pregabalina</div>
+          <div class="product-indication">Dolor neuropático periférico y central · Fibromialgia</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <div class="section-header">
+      <h2>Servicios para el Médico</h2>
+      <p>Herramientas y soporte diseñados para facilitar su práctica clínica</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="icon">💬</div>
+        <h3>Consulta 24/7</h3>
+        <p>Representante médico virtual para consultas farmacológicas en cualquier momento.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📅</div>
+        <h3>Agendamiento</h3>
+        <p>Solicite visitas con el representante y reciba confirmación automática en su calendario.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🔬</div>
+        <h3>Evidencia Clínica</h3>
+        <p>Acceso a resúmenes de estudios clave: TNT, UKPDS, SYGMA, CARDS y más.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📦</div>
+        <h3>Muestras Médicas</h3>
+        <p>Solicite muestras directamente al representante desde el chat.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">👥</div>
+        <h3>Apoyo a Pacientes</h3>
+        <p>Programa Pharmagen Contigo: descuentos y acceso a tratamiento para pacientes vulnerables.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <h2>¿Tiene preguntas clínicas sobre nuestros productos?</h2>
+    <p>Nuestro representante médico virtual está listo para orientarle con información farmacológica precisa y basada en evidencia.</p>
+    <button class="btn-cta">Iniciar consulta ahora</button>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>
+      <strong>Pharmagen Laboratorios, S.A. de C.V.</strong> · Portal Médico Demo
+    </div>
+    <div class="disclaimer">
+      La información contenida en este portal es de carácter científico y está dirigida exclusivamente a profesionales de la salud. No constituye prescripción médica. Consulte siempre la ficha técnica completa antes de prescribir.
+    </div>
+  </footer>
+
+  <!-- CHATY WIDGET — Representante Médico Virtual -->
+  <script src="http://localhost:8000/widget.js" data-tenant="pharmagen"></script>
+
+</body>
+</html>
