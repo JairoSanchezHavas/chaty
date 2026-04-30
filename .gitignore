@@ -8,3 +8,4 @@ backend/secrets/*.json
 backend/venv/
 .DS_Store
 node_modules/
+backend/__pycache__/
